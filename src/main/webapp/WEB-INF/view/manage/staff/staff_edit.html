@@ -1,0 +1,61 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="${staff.id}">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+					<#input id="name" name="姓名" value="${staff.name}"/>
+					<#input id="age" name="年龄" value="${staff.age}"/>
+					<#input id="cardId" name="身份证号" value="${staff.cardId}"/>
+					<#input id="origin" name="籍贯" value="${staff.origin}"/>
+					<#input id="deptid" name="部门" value="${staff.deptId}" readonly="readonly" hidden="deptId"
+								clickFun="StaffInfoDlg.showDeptSelectTree(); return false;"
+								style="background-color: #ffffff !important;"/>
+					<#input id="entrytime" name="入职日期" value="${staff.entrytime}"
+								clickFun="laydate({istime: false, format: 'YYYY-MM-DD'})"/>
+					<#input id="otherOne" name="电话" value="${staff.otherOne}"/>
+                </div>
+
+                <div class="col-sm-6">
+                	<#select id="sex" name="性别" >
+							<option value="">请选择</option>
+							@for(sex in sexs){
+							<option value="${sex.num}"${staff.sex==sex.num?'selected':''}>${sex.name}</option>
+							@}
+						</#select>
+					<#input id="nation" name="民族" value="${staff.nation}"/>
+					<#input id="cardAddress" name="证件地址" value="${staff.cardAddress}"/>
+					<#input id="address" name="地址" value="${staff.address}"/>
+					<#input id="pay" name="薪资" value="${staff.pay}"/>
+					<#input id="post" name="职位" value="${staff.post}"/>
+					<#select id="otherTwo" name="在职状态" >
+							<option value="">请选择</option>
+							@for(statu in status){
+							<option value="${statu.num}"${staff.otherTwo==statu.num?'selected':''}>${statu.name}</option>
+							@}
+							
+						</#select>
+
+                </div>
+            </div>
+			<!-- 这是部门选择的下拉框 -->
+			<div id="menuContent" class="menuContent"
+				style="display: none; position: absolute; z-index: 200;">
+				<ul id="treeDemo" class="ztree tree-box" style="width: 249px !important;"></ul>
+			</div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="StaffInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="StaffInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/manage/staff/staff_info.js"></script>
+@}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.manage.dao.ProductDao">
+	<select id = "selectIdAndName" resultType="map">
+		SELECT id,name FROM wq_product WHERE delflag = 1
+	</select>
+	<select id = "selectAll" resultType="map">
+		SELECT * FROM wq_product WHERE delflag = 1
+	</select>
+	<delete id="delete">
+	update wq_product
+	set
+	delflag = 0
+	WHERE id = #{id}
+	</delete>
+</mapper>

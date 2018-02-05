@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.manage.dao.TakeDeliveyInfoDao">
+	<select id="selectByNo" resultType="com.stylefeng.guns.common.persistence.model.TakeDeliveyInfo">
+		select * from wq_take_delivey_info
+		where delflag = 1 and takedeliveyno = #{tdNo}
+	</select>
+	
+	<update id="delete">
+		update wq_take_delivey_info
+		set
+			delflag = 0
+		where takedeliveyno = #{tdNo}
+	</update>
+</mapper>

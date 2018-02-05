@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.manage.dao.SalesDao">
+	<select id="selectAll" resultType="map">
+		select * from wq_sales
+		where delflag = 1
+		<!-- <if test="">
+			and 
+		</if> -->
+	</select>
+	<select id="selectLastOne" resultType="map">
+		SELECT
+			*
+		FROM
+			wq_sales
+		WHERE
+			delflag = 1 AND salesno LIKE CONCAT(#{begin},'%')
+		ORDER BY
+			id DESC
+		LIMIT 1
+	</select>
+	<update id="delete">
+		update wq_sales
+	set
+	delflag = 0
+	WHERE id = #{id}
+	</update>
+	<select id="selectByNo" resultType="com.stylefeng.guns.common.persistence.model.Sales">
+		select * from wq_sales
+		where delflag = 1 and salesno = #{no}
+	</select>
+	<select id="selectMapByNo" resultType="map">
+		select a.salesno,a.dispatchingtime,b.name from wq_sales a,wq_staff b
+		where a.delflag = 1 and a.salesno = #{no} 
+		and b.del_flag = 1 and a.staffid = b.id
+	</select>
+</mapper>

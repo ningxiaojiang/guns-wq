@@ -1,0 +1,138 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="${sales.id}">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                	<input type="hidden" id="itemSize" value="${salesInfoes.~size!0}" />
+					<#input id="salesno" name="销售单号" value="${sales.salesno}" />
+					<#select id="clientid" name="客户">
+					<option value="">请选择</option>
+					@for(client in clients){
+					<option value="${client.id}"${client.id==sales.clientid?'selected':''}>${client.name}</option>
+					@} 
+					</#select>
+					<#input id="price" name="总价" value="${sales.price}"/>
+					<#select id="dispatchingtype" name="配送方式">
+					<option value="">请选择</option>
+					@for(ps in types){
+					<option value="${ps.num}"${ps.num==sales.dispatchingtype?'selected':''}>${ps.name}</option>
+					@} 
+					</#select>
+					<#input id="dispatchingtime" name="配送日期" value="${sales.dispatchingtime}"
+								clickFun="laydate({istime: false, format: 'YYYY-MM-DD'})"/>
+					<#input id="otherthree" name="另收税点" value="${sales.otherthree}"/>
+                </div>
+
+                <div class="col-sm-6">
+					<#select id="staffid" name="销售人员">
+					<option value="">请选择</option>
+					@for(staff in staffes){
+					<option value="${staff.id}"${staff.id==sales.staffid?'selected':''}>${staff.name}</option>
+					@} 
+					</#select>
+					<#input id="number" name="数量" value="${sales.number}"/>
+					<#select id="status" name="状态">
+					<option value="">请选择</option>
+					@for(zt in statues){
+					<option value="${zt.num}"${zt.num==sales.status?'selected':''}>${zt.name}</option>
+					@} 
+					</#select>
+					<#input id="preferential" name="优惠" value="${sales.preferential}"/>
+					<#select id="otherone" name="发票">
+					<option value="">请选择</option>
+					@for(fp in fps){
+					<option value="${fp.num}"${fp.num==sales.otherone?'selected':''}>${fp.name}</option>
+					@} 
+					</#select>
+					<#input id="othertwo" name="发票金额" value="${sales.othertwo}"/>
+					<#button btnCss="info" id="tj" name="添加产品清单" icon="fa-plus" clickFun="SalesInfoDlg.addItem()"/>
+                </div>
+            </div>
+			<div class="fixed-table-container" style="display:none;" id="tableTop">
+				<div class="fixed-table-body">
+					<table style="margin-bottom:0;" class="table table-hover table-striped" >
+						<thead>
+						<tr style="text-align: center;fout-size:25px;">
+							<td colspan="5">产品清单</td>
+						</tr>
+						</thead>
+						<thead style="height:30px;">
+						<tr style="text-align: center;fout-size:25px;">
+							<td style="width:20%;text-align: center; vertical-align: middle;">产品</td>
+							<td style="width:10%;text-align: center; vertical-align: middle;">单价</td>
+							<td style="width:10%;text-align: center; vertical-align: middle;">数量</td>
+							<td style="width:30%;text-align: center; vertical-align: middle;">备注</td>
+							<td style="width:10%;text-align: center; vertical-align: middle;"></td>
+						</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+			<div class="col-sm-12" id="itemsArea">
+				@for(var i = 0; i < salesInfoes.~size;i++){
+				<div class="form-group" style="margin-bottom:0;" name="salesInfoTable" id="salesInfoTable">
+					<table name="ProductTable" id="ProductTable${i+1}" style="margin-bottom:0;border: 1px solid #e7eaec;" class="table table-hover table-striped" >
+						<tbody>
+							<tr data-index="0">
+								<td style="width:20%;text-align: center; vertical-align: middle;">
+									<select style="height: 30px;" name="productId">
+										<option value="">请选择</option>
+										@for(pro in productes){
+										<option value="${pro.id}"${pro.id==salesInfoes[i].productid?'selected':''}>${pro.name}</option>
+										@}
+									</select>
+								</td>
+								<td style="width:10%;text-align: center; vertical-align: middle;"><input class="juj" name="price" value="${salesInfoes[i].price}"></td>
+								<td style="width:10%;text-align: center; vertical-align: middle;"><input class="juj" name="numbers" value="${salesInfoes[i].counts}"></td>
+								<td style="width:30%;text-align: center; vertical-align: middle;"><input class="juj" name="remarks" value="${salesInfoes[i].remarks}"></td>
+								<td style="width:10%;text-align: center; vertical-align: middle;">
+		                    		<#button btnCss="info" name="添加" icon="fa-plus" clickFun="SalesInfoDlg.addItem()"/>
+		              		  		<#button btnCss="danger" name="删除" id="cancel" icon="fa-remove" clickFun="SalesInfoDlg.deleteItem(event)"/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+		        </div>
+				@}
+			</div>
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="SalesInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="SalesInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/template" id="itemTemplate">
+        <div class="form-group" style="margin-bottom:0;" name="salesInfoTable" id="salesInfoTable">
+			<table name="ProductTable" id="ProductTable" style="margin-bottom:0;border: 1px solid #e7eaec;" class="table table-hover table-striped" >
+				<tbody>
+					<tr data-index="0">
+						<td style="width:20%;text-align: center; vertical-align: middle;">
+							<select style="height: 30px;" name="productId">
+								<option value="">请选择</option>
+								@for(pro in productes){
+								<option value="${pro.id}">${pro.name}</option>
+								@}
+							</select>
+						</td>
+						<td style="width:10%;text-align: center; vertical-align: middle;"><input class="juj" name="price"></td>
+						<td style="width:10%;text-align: center; vertical-align: middle;"><input class="juj" name="numbers"></td>
+						<td style="width:30%;text-align: center; vertical-align: middle;"><input class="juj" name="remarks"></td>
+						<td style="width:10%;text-align: center; vertical-align: middle;">
+                    		<#button btnCss="info" name="添加" icon="fa-plus" clickFun="SalesInfoDlg.addItem()"/>
+              		  		<#button btnCss="danger" name="删除" id="cancel" icon="fa-remove" clickFun="SalesInfoDlg.deleteItem(event)"/>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+        </div>
+</script>
+<script src="${ctxPath}/static/modular/manage/sales/sales_info.js"></script>
+@}

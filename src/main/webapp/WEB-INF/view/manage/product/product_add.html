@@ -1,0 +1,43 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+					<#input id="name" name="名称" />
+					<#input id="price" name="价格" />
+					<#input id="packagenumber" name="包装数量" />
+                </div>
+
+                <div class="col-sm-6">
+					<#select id="typeid" name="产品类型" >
+						<option value="">请选择</option>
+						@for(type in types){
+						<option value="${type.id}">${type.name}</option>
+						@}
+					</#select>
+					<#select id="packagetype" name="包装方式" >
+						<option value="">请选择</option>
+						@for(ptype in ptypes){
+						<option value="${ptype.num}">${ptype.name}</option>
+						@}
+					</#select>
+					<#input id="remarks" name="备注" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="ProductInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="关闭" id="cancel" icon="fa-eraser" clickFun="ProductInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/manage/product/product_info.js"></script>
+@}

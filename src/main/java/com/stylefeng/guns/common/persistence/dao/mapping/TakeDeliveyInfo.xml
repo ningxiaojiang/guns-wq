@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.common.persistence.dao.TakeDeliveyInfoMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.stylefeng.guns.common.persistence.model.TakeDeliveyInfo">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="takedeliveyno" jdbcType="VARCHAR" property="takeDeliveyNo"/>
+        <result column="productid" jdbcType="INTEGER" property="productid"/>
+        <result column="delflag" jdbcType="INTEGER" property="delflag"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="number" jdbcType="INTEGER" property="number"/>
+        <result column="otherone" jdbcType="VARCHAR" property="otherone"/>
+        <result column="othertwo" jdbcType="VARCHAR" property="othertwo"/>
+    </resultMap>
+</mapper>

@@ -1,0 +1,93 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="${takeDelivey.id}">
+			<input type="hidden" id="itemSize" value="${takeDeliveyInfoes.~size!0}" />
+            <div class="row">
+                <div class="col-sm-6 b-r">
+					<#input id="otherone" name="货单号" value="${takeDelivey.otherone}"/>
+					<#input id="date" name="提货日期" value="${takeDelivey.date}"
+								clickFun="laydate({istime: false, format: 'YYYY-MM-DD'})"/>
+					<#select id="type" name="提货方式">
+					<option value="">请选择</option>
+					@for(ps in types){
+					<option value="${ps.num}"${takeDelivey.type==ps.num?'selected':''}>${ps.name}</option>
+					@} 
+					</#select>
+                </div>
+
+                <div class="col-sm-6">
+					<#select id="staffid" name="提货人">
+					<option value="">请选择</option>
+					@for(staff in staffes){
+					<option value="${staff.id}"${takeDelivey.staffid==staff.id?'selected':''}>${staff.name}</option>
+					@} 
+					</#select>
+					<#input id="money" name="运费" value="${takeDelivey.money}"/>
+					<#input id="remarks" name="备注" value="${takeDelivey.remarks}"/>
+					<#button btnCss="info" name="添加产品清单" icon="fa-plus" clickFun="TakeDeliveyInfoDlg.addItem()"/>
+                </div>
+            </div>
+			<div class="fixed-table-container" style="display:none;" id="tableTop">
+				<div class="fixed-table-body">
+					<table style="margin-bottom:0;" class="table table-hover table-striped" >
+						<thead>
+						<tr style="text-align: center;fout-size:25px;">
+							<td colspan="4">产品清单</td>
+						</tr>
+						</thead>
+						<thead style="height:30px;">
+						<tr style="text-align: center;fout-size:25px;">
+							<td style="width:20%;text-align: center; vertical-align: middle;">产品</td>
+							<td style="width:10%;text-align: center; vertical-align: middle;">数量</td>
+							<td style="width:30%;text-align: center; vertical-align: middle;">备注</td>
+							<td style="width:10%;text-align: center; vertical-align: middle;"></td>
+						</tr>
+						</thead>
+					</table>
+				</div>
+			</div>		
+			<div class="col-sm-12" id="itemsArea">
+				@for(var i = 0; i < takeDeliveyInfoes.~size;i++){
+				<div class="form-group" style="margin-bottom:0;" name="takeDeliveyInfoTable" id="takeDeliveyInfoTable">
+					<table name="ProductTable" id="ProductTable${i+1}" style="margin-bottom:0;border: 1px solid #e7eaec;" class="table table-hover table-striped" >
+						<tbody>
+							<tr data-index="0">
+								<td style="width:20%;text-align: center; vertical-align: middle;">
+									<input type="hidden" name="id" value="${takeDeliveyInfoes[i].id}">
+									<select style="height: 30px;" name="productId">
+										<option value="">请选择</option>
+										@for(pro in productes){
+										<option value="${pro.id}"${pro.id==takeDeliveyInfoes[i].productId?'selected':''}>${pro.name}</option>
+										@}
+									</select>
+								</td>
+								<td style="width:10%;text-align: center; vertical-align: middle;">
+								<input class="juj" name="numbers" value="${takeDeliveyInfoes[i].number}">
+								<input type="hidden" class="juj" name="numbersy" value="${takeDeliveyInfoes[i].number}">
+								</td>
+								<td style="width:30%;text-align: center; vertical-align: middle;"><input class="juj" name="remarks" value="${takeDeliveyInfoes[i].remarks}"></td>
+								<td style="width:10%;text-align: center; vertical-align: middle;">
+		                    		<#button btnCss="info" name="添加" icon="fa-plus" clickFun="TakeDeliveyInfoDlg.addItem()"/>
+		              		  		<#button btnCss="danger" name="删除" id="cancel" icon="fa-remove" clickFun="TakeDeliveyInfoDlg.deleteItem(event)"/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+		        </div>
+				@}
+			</div>
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="TakeDeliveyInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="TakeDeliveyInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/manage/takeDelivey/takeDelivey_info.js"></script>
+@}

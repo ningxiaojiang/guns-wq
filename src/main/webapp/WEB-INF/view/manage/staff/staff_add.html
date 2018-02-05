@@ -1,0 +1,60 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="staffInfoForm">
+
+            <input type="hidden" id="id" value="">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+					<#input id="name" name="姓名" />
+					<#input id="age" name="年龄" />
+					<#input id="cardId" name="身份证号" />
+					<#input id="origin" name="籍贯" />
+					<#input id="deptid" name="部门" readonly="readonly" hidden="deptId"
+								clickFun="StaffInfoDlg.showDeptSelectTree(); return false;"
+								style="background-color: #ffffff !important;"/>
+					<#input id="entrytime" name="入职日期" 
+								clickFun="laydate({istime: false, format: 'YYYY-MM-DD'})"/>
+					<#input id="otherOne" name="电话" />
+                </div>
+
+                <div class="col-sm-6">
+                	<#select id="sex" name="性别" >
+							<option value="">请选择</option>
+							@for(sex in sexs){
+							<option value="${sex.num}">${sex.name}</option>
+							@}
+						</#select>
+					<#input id="nation" name="民族" />
+					<#input id="cardAddress" name="证件地址" />
+					<#input id="address" name="地址" />
+					<#input id="pay" name="薪资" />
+					<#input id="post" name="职位" />
+					<#select id="otherTwo" name="在职状态" >
+							<option value="">请选择</option>
+							@for(statu in status){
+							<option value="${statu.num}">${statu.name}</option>
+							@}
+							
+						</#select>
+
+                </div>
+            </div>
+			<!-- 这是部门选择的下拉框 -->
+			<div id="menuContent" class="menuContent"
+				style="display: none; position: absolute; z-index: 200;">
+				<ul id="treeDemo" class="ztree tree-box" style="width: 249px !important;"></ul>
+			</div>
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="StaffInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="StaffInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/manage/staff/staff_info.js"></script>
+@}

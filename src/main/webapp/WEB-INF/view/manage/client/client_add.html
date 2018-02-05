@@ -1,0 +1,44 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+					<#input id="name" name="姓名" />
+					<#select id="sex" name="性别" >
+						<option value="">请选择</option>
+						@for(sex in sexs){
+						<option value="${sex.num}">${sex.name}</option>
+						@}
+					</#select>
+					<#input id="dt" name="公司" />
+					<#input id="tel" name="电话" />
+					<#input id="otherone" name="住址" />
+					<#input id="remearks" name="备注" />
+                </div>
+
+                <div class="col-sm-6">
+					<#input id="age" name="年龄" />
+					<#input id="nativplace" name="籍贯" />
+					<#input id="othertwo" name="职位" />
+					<#input id="phone" name="手机" />
+					<#input id="birthday" name="生日" underline="true" 
+								clickFun="laydate({istime: false, format: 'YYYY-MM-DD'})"/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="ClientInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="关闭" id="cancel" icon="fa-eraser" clickFun="ClientInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/manage/client/client_info.js"></script>
+@}
